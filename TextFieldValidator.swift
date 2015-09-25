@@ -62,7 +62,7 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
     
     class func checkIfAllFieldsAreFilled(view:UIView) -> Bool{
 
-        var subviews : NSArray = view.subviews
+        let subviews : NSArray = view.subviews
         if(subviews.count == 0){
             return false
         }
@@ -96,7 +96,7 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
         let numberCharacterSet = NSCharacterSet.decimalDigitCharacterSet()
         let inputString = string
         let range = inputString.rangeOfCharacterFromSet(numberCharacterSet)
-         println(inputString)
+         print(inputString)
         // range will be nil if no numbers are found
         if let test = range {
             
@@ -115,7 +115,7 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
         
         let inputString = string
         let range = inputString.rangeOfCharacterFromSet(alphabetCharacterSet)
-        println(inputString)
+        print(inputString)
         // range will be nil if no alphabet are found
         if let test = range {
             
@@ -135,7 +135,7 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
     func restrictSpecialSymbols(string : String) -> Bool
     {
         let range = string.rangeOfCharacterFromSet(specialSymbolsCharacterSet.invertedSet)
-        println(string)
+        print(string)
         // range will be nil if no specialSymbol are found
         if let test = range {
             
@@ -158,7 +158,7 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
             let emailReg = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
             let range = textField.text.rangeOfString(emailReg, options:.RegularExpressionSearch)
             let result = range != nil ? true : false
-            println(result)
+            print(result)
             if(result){
                 ParentDelegate as! UIViewController
                 ParentDelegate!.presentViewController(alertControllerForInvalidEmailAddress, animated: true, completion: nil)
@@ -228,7 +228,8 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
             
         }
         else if(restrictTextFieldToLimitedCharecters){
-            let newLength = count(textField.text) + count(string) - range.length
+            
+            let newLength = textField.text.characters.count + string.characters.count - range.length
             return newLength <= setNumberOfCharectersToBeRestricted
         }
 
@@ -265,11 +266,11 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
         
         alertControllerForNumberOnly = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         for(var i = 0 ; i < buttonActions.count; i++){
-            var count = i
+            let count = i
             let buttonAction = UIAlertAction(title: buttonTitles[count] as! String, style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
                 if(buttonActions.count > 0){
                     let methodName = buttonActions[count] as! String
-                    println(methodName)
+                    print(methodName)
                     NSTimer.scheduledTimerWithTimeInterval(0, target: self.ParentDelegate as! UIViewController, selector: Selector(methodName), userInfo: nil, repeats: false)
                 }
             })
@@ -282,12 +283,12 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
         
         alertControllerForAlphabetsOnly = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         for(var i = 0 ; i < buttonActions.count; i++){
-            var count = i
+            let count = i
             let buttonAction = UIAlertAction(title: buttonTitles[count] as! String, style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
                 
                 if(buttonActions.count > 0){
                     let methodName = buttonActions[count] as! String
-                    println(methodName)
+                    print(methodName)
                     NSTimer.scheduledTimerWithTimeInterval(0, target: self.ParentDelegate as! UIViewController, selector: Selector(methodName), userInfo: nil, repeats: false)
                 }
 
@@ -302,12 +303,12 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
         
         alertControllerForSpecialSymbols = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         for(var i = 0 ; i < buttonActions.count; i++){
-            var count = i
+            let count = i
             let buttonAction = UIAlertAction(title: buttonTitles[count] as! String, style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
                 
                 if(buttonActions.count > 0){
                     let methodName = buttonActions[count] as! String
-                    println(methodName)
+                    print(methodName)
                     NSTimer.scheduledTimerWithTimeInterval(0, target: self.ParentDelegate as! UIViewController, selector: Selector(methodName), userInfo: nil, repeats: false)
                 }
                 
@@ -321,12 +322,12 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
             
             alertControllerForInvalidEmailAddress = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
             for(var i = 0 ; i < buttonActions.count; i++){
-                var count = i
+                let count = i
                 let buttonAction = UIAlertAction(title: buttonTitles[count] as! String, style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
                     
                     if(buttonActions.count > 0){
                         let methodName = buttonActions[count] as! String
-                        println(methodName)
+                        print(methodName)
                         NSTimer.scheduledTimerWithTimeInterval(0, target: self.ParentDelegate as! UIViewController, selector: Selector(methodName), userInfo: nil, repeats: false)
                     }
                     
@@ -339,16 +340,16 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
     
     //MARK: shake textField
   class  func shaketextField(textfield : UITextField){
-        var shake:CABasicAnimation = CABasicAnimation(keyPath: "position")
+        let shake:CABasicAnimation = CABasicAnimation(keyPath: "position")
         shake.duration = 0.1
         shake.repeatCount = 2
         shake.autoreverses = true
         
-        var from_point:CGPoint = CGPointMake(textfield.center.x - 5, textfield.center.y)
-        var from_value:NSValue = NSValue(CGPoint: from_point)
+        let from_point:CGPoint = CGPointMake(textfield.center.x - 5, textfield.center.y)
+        let from_value:NSValue = NSValue(CGPoint: from_point)
         
-        var to_point:CGPoint = CGPointMake(textfield.center.x + 5, textfield.center.y)
-        var to_value:NSValue = NSValue(CGPoint: to_point)
+        let to_point:CGPoint = CGPointMake(textfield.center.x + 5, textfield.center.y)
+        let to_value:NSValue = NSValue(CGPoint: to_point)
         
         shake.fromValue = from_value
         shake.toValue = to_value
@@ -357,7 +358,4 @@ class TextFieldValidator: UITextField,UITextFieldDelegate {
         
     }
 
-
-  
-    
 }
